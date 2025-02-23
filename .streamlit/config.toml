@@ -1,0 +1,10 @@
+[theme]
+base = "light"
+primaryColor="#fc6c85"
+backgroundColor="#bcd2e8"
+secondaryBackgroundColor="#fff8fa"
+textColor="#1e3f66"
+font="monospace"
+
+[runner]
+magicEnabled = false
