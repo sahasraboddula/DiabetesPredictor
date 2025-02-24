@@ -1,3 +1,3 @@
 # DiabetesPredictor
 
-https://diabetesprediction2025.streamlit.app/
+View our app here: https://diabetesprediction2025.streamlit.app/
