@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 # import matplotlib.pyplot as plt
-import seaborn as sns
+# import seaborn as sns
 from imblearn.under_sampling import RandomUnderSampler
 from collections import Counter
 from sklearn.preprocessing import LabelEncoder
