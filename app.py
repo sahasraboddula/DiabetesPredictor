@@ -123,12 +123,24 @@ Waist_circumference = st.number_input("**Enter waist circumference (cm)**")
 smoking_history = st.radio("**Enter Smoking History:**", [0, 1, 2, 3], format_func=lambda x: "Never" if x==3 else "Former" if x == 2 else "Not Current" if x == 1 else "Current", index=None )
 hypertension = st.radio("**Do you have Hypertension?**", [0, 1], format_func=lambda x: "Yes" if x == 1 else "No", index=None)
 heart_disease = st.radio("**Do you have Heart Disease?**", [0, 1], format_func=lambda x: "Yes" if x==1 else "No", index=None)
-HbA1c_lev = st.number_input("**Enter your A1c levels: (enter -1 if you do not know)**")
+HbA1c_lev = st.number_input("**Enter your A1c levels: (enter -1 if you do not know, we will ask you some questions to predict your A1c)**")
 if HbA1c_lev < 0:
     Sex = gender
     Age = age
     Height = height
     Weight = weight
+    HbA1c_cat = st.radio(
+       """**Please select which A1c level you think you have based on these symptoms:**\n
+**Symptoms of low A1c** -
+Shakiness, Sweating, Dizziness, Confusion, Anxiety, Headache, Blurred vision, and Seizures
+
+
+**Symptoms of high A1c** -
+Increased thirst, Frequent urination, Excessive hunger, Blurred vision, Fatigue, Slow-healing wounds""",
+       [1, 2, 3, 4],
+       format_func=lambda x: "Normal" if x == 1 else "Boundary" if x == 2 else "Slightly High" if x == 3 else "High",
+       index=None
+    )
     Blood_pressure_cat = st.radio(
        "**Enter Blood Pressure:**",
        [1, 2, 3],
@@ -146,18 +158,6 @@ if HbA1c_lev < 0:
        [1, 2, 3],
        format_func=lambda x: "Normal" if x == 1 else "Slightly High" if x == 2 else "High",
         index=None
-    )
-    HbA1c_cat = st.radio(
-       """**Please select which A1c level you think you have based on these symptoms:**\n
-**Symptoms of low A1c** -
-Shakiness, Sweating, Dizziness, Confusion, Anxiety, Headache, Blurred vision, and Seizures
-
-
-**Symptoms of high A1c** -
-Increased thirst, Frequent urination, Excessive hunger, Blurred vision, Fatigue, Slow-healing wounds""",
-       [1, 2, 3, 4],
-       format_func=lambda x: "Normal" if x == 1 else "Boundary" if x == 2 else "Slightly High" if x == 3 else "High",
-       index=None
     )
   
     if smoking_history == 1:
