@@ -125,33 +125,16 @@ hypertension = st.radio("**Do you have Hypertension?**", [0, 1], format_func=lam
 heart_disease = st.radio("**Do you have Heart Disease?**", [0, 1], format_func=lambda x: "Yes" if x==1 else "No", index=None)
 HbA1c_lev = st.number_input("**Enter your A1c levels: (enter -1 if you do not know)**")
 if HbA1c_lev < 0:
-    # model = joblib.load("hba1c_model.pkl")
     Sex = gender
     Age = age
-    # Sex = st.radio("Enter Sex:", [0, 1], format_func=lambda x: "Male" if x == 1 else "Female")
-    # Age = st.slider("Select your age:", min_value=0, max_value=120, step=1)
     Height = height
     Weight = weight
-    # Height = st.number_input("Enter  height (cm)")
-    # Weight = st.number_input("Enter weight (kg)")
-    # if Height != 0:
-    #     bmi = Weight / ((Height/100) ** 2)
-
-
-
-
-   # birth_yr = int(st.number_input("Enter birth year", format="%d"))
     Blood_pressure_cat = st.radio(
        "**Enter Blood Pressure:**",
        [1, 2, 3],
        format_func=lambda x: "Normal" if x == 1 else "Mild Risk" if x == 2 else "High Risk",
        index=None
     )
-   # Blood_pressure_cat = st.radio(
-   #     "Enter Blood Pressure: (1 = Normal, 2 = Mild Risk, 3 = High Risk)",
-   #     [1, 2, 3],
-   #     format_func=lambda x: "Normal" if x == 1 else "Mild Risk" if x == 2 else "High Risk"
-   # )
     HDL_cat = st.radio(
        "**Enter your HDL (commonly known as 'good' cholestrol) Level:**",
        [1, 2, 3],
@@ -181,18 +164,13 @@ Increased thirst, Frequent urination, Excessive hunger, Blurred vision, Fatigue,
         Smoking_status = 1
     else:
         Smoking_status = 0
-    # Smoking_status = st.radio("Enter Smoking Status:", [0, 1], format_func=lambda x: "None" if x == 0 else "Smoking")
     Hypertenstion_med = hypertension
-
-    # Hypertenstion_med = st.radio("Enter if you take medication for Hypertension:", [0, 1], format_func=lambda x: "No" if x == 0 else "Yes")
     Hyperlipidemia_med = st.radio("**Enter if you take medication for Hyperlipidemia:**", [0, 1], format_func=lambda x: "No" if x == 0 else "Yes", index=None)
-
     Cardiovascular_diseases = heart_disease
-    # Cardiovascular_diseases = st.radio("Do you have Cardiovascular Disease?", [0, 1], format_func=lambda x: "No" if x == 0 else "Yes")
-    Dialysis = st.radio("**Are you on dialysis?**", [0, 1], format_func=lambda x: "No" if x == 0 else "Yes", index=None)
+    Dialysis = st.radio("**Are you undergoing Dialysis?**", [0, 1], format_func=lambda x: "No" if x == 0 else "Yes", index=None)
     Anemia_category = st.radio("**Do you have Anemia?**", [0, 1], format_func=lambda x: "No" if x == 0 else "Yes", index=None)
     Exercise30minutes_cat = st.radio("**Do you exercise for 30 minutes everyday?**",[1, 2], format_func=lambda x: "No" if x == 2 else "Yes", index=None)
-    Alcohol_amount_cat = st.radio("**How much alcohol do you consume?**", [1, 2, 3], format_func=lambda x: "Everyday" if x == 1 else "Sometimes" if x == 2 else "Never", index=None)
+    Alcohol_amount_cat = st.radio("**How much often do you consume alcohol?**", [1, 2, 3], format_func=lambda x: "Never" if x == 1 else "Sometimes" if x == 2 else "Everyday", index=None)
 
     HbA1c = None
     HbA1c_level = None
@@ -201,27 +179,38 @@ Increased thirst, Frequent urination, Excessive hunger, Blurred vision, Fatigue,
     if HbA1c is not None:
         HbA1c_level = HbA1c
         if HbA1c_level is not None:
-            st.write(f"Predicted HbA1c level: {HbA1c_level:.2f}")
+            st.write(f"**Predicted HbA1c level: {HbA1c_level:.2f}**")
     HbA1c_lev = HbA1c_level
-    # if HbA1c_level is not None:
-    #     st.write(f"Predicted HbA1c_level1: {HbA1c_level:.2f}")
-    #     blood_glucose_level = st.number_input("**Enter your Blood Glucose Level: **")
-    #     if st.button("**Calculate**"):
-    #         if HbA1c_level is not None:
-    #             st.write("Predicted Chance of Diabetes:%")
-    #             prediction = diabetes_model.predict([[gender,age,bmi,smoking_history,hypertension,heart_disease,HbA1c_level,blood_glucose_level]])
-    #             st.write(f"Predicted Chance of Diabetes: {prediction[0]:.2f}%")
 
-    blood_glucose_level = st.number_input("**Enter your Blood Glucose Level:**")
+    blood_glucose_level = st.radio("""**Enter your Blood Glucose Level Based on these Symptoms:**\n
+**Symptoms of low glucose levels:**\n
+Shakiness or trembling, Sweating, Hunger, Dizziness or lightheadedness, Confusion or difficulty concentrating, Headache, Anxiety or irritability\n
+**Symptoms of high glucose levels:**\n
+Urinating large amounts, Excessive thirst, Feeling tired, Frequent hunger, Dry mouth, Weight loss, Blurred vision""", [70, 110, 135.5, 170], format_func=lambda x: "Low" if x == 70 else 
+            "Normal" if x == 110 else 
+            "Slightly High" if x == 135.5 else "High" )
+
+
+    # blood_glucose_level = st.number_input("**Enter your Blood Glucose Level:**")
     if st.button("**Calculate**"):
         if HbA1c_level is not None:
             prediction1 = diabetes_model.predict([[gender,age,bmi,smoking_history,hypertension,heart_disease,HbA1c_level,blood_glucose_level]])
             prediction1 = prediction1*100
-            st.write(f"Predicted Chance of Diabetes: {prediction1[0]:.2f}%")
+            st.write(f"**Predicted Chance of Diabetes: {prediction1[0]:.2f}%**")
 else:
-    blood_glucose_level = st.number_input("**Enter your Blood Glucose Level:**")
+    blood_glucose_level = st.radio("""**Enter your Blood Glucose Level Based on these Symptoms:**\n
+**Symptoms of low glucose levels:**\n
+Shakiness or trembling, Sweating, Hunger, Dizziness or lightheadedness, Confusion or difficulty concentrating, Headache, Anxiety or irritability\n
+**Symptoms of high glucose levels:**\n
+Urinating large amounts, Excessive thirst, Feeling tired, Frequent hunger, Dry mouth, Weight loss, Blurred vision""", [70, 110, 135.5, 170], format_func=lambda x: "Low" if x == 70 else 
+            "Normal" if x == 110 else 
+            "Slightly High" if x == 135.5 else "High" )
+
+
+    
+    # blood_glucose_level = st.number_input("**Enter your Blood Glucose Level:**")
     HbA1c_level = HbA1c_lev
     if st.button("**Calculate**"):
         prediction = diabetes_model.predict([[gender,age,bmi,smoking_history,hypertension,heart_disease,HbA1c_level,blood_glucose_level]])
         prediction = prediction*100
-        st.write(f"Predicted Chance of Diabetes: {prediction[0]:.2f}%")
+        st.write(f"**Predicted Chance of Diabetes: {prediction[0]:.2f}%**")
